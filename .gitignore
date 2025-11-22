@@ -1,0 +1,23 @@
+# Binaries for programs
+*.exe
+*.dll
+*.so
+
+# Test binaries
+*.test
+*.out
+
+# IDE/Editor specific files
+.idea/
+.vscode/
+*~
+
+# OS generated files
+.DS_Store
+Thumbs.db
+NS_STORE
+
+# Environment variables / Credentials
+.env
+credentials
+config
