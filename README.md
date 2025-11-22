@@ -86,4 +86,9 @@ AWS 리소스를 관리합니다. 보안을 위해 민감한 정보(ID, IP, ARN 
 
 - **Terraform**: v1.0 이상
 - **Ansible**: 최신 버전 권장
-- **AWS CLI**: 자격 증명 설정 
+- **AWS CLI**: 자격 증명 설정
+
+---
+
+## 3. Architecture
+<img width="3248" height="2404" alt="아키텍처 drawio" src="https://github.com/user-attachments/assets/7588ffb6-87d6-41c9-add9-1c98e1431b0a" />
