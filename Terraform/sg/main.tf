@@ -42,6 +42,14 @@ resource "aws_security_group" "tfer--Kubernetes-sg_sg-067bf74f7fc603061" {
     to_port     = "0"
   }
 
+  ingress {
+    description = "Vercel connection"
+    from_port   = "30080"
+    protocol    = "tcp"
+    self        = "false"
+    to_port     = "30080"
+  }
+
   name   = "Kubernetes-sg"
   vpc_id = var.vpc_id_1
 }
