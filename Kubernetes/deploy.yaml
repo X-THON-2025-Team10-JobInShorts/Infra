@@ -77,3 +77,88 @@ spec:
     - port: 8080       # 서비스 내부 포트
       targetPort: 8080 
       nodePort: 30080  # Vercel이 접속할 포트 
+
+
+# ==========================================
+# 4. Database Storage
+# ==========================================
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: db-pvc
+  labels:
+    app: postgres-db
+spec:
+  accessModes:
+    - ReadWriteOnce 
+  resources:
+    requests:
+      storage: 10Gi
+
+---
+# ==========================================
+# 5. Database (PostgreSQL)
+# ==========================================
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: db-statefulset
+  labels:
+    app: postgres-db
+spec:
+  serviceName: "db-service"
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres-db
+  template:
+    metadata:
+      labels:
+        app: postgres-db
+    spec:
+      containers:
+      - name: postgres-db
+        image: postgres:15 
+        ports:
+        - containerPort: 5432 # DB 내부 포트
+        
+        env:
+        - name: POSTGRES_DB
+          value: xhackathon # DB 이름
+        - name: POSTGRES_USER
+          valueFrom:
+            secretKeyRef:
+              name: backend-db-secret
+              key: DB_USERNAME
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: backend-db-secret
+              key: DB_PASSWORD
+
+        # 영구 저장소 마운트
+        volumeMounts:
+        - name: db-data
+          mountPath: /var/lib/postgresql/data # DB 데이터가 저장되는 경로
+      
+      # PVC 연결
+      volumes:
+      - name: db-data
+        persistentVolumeClaim:
+          claimName: db-pvc
+
+---
+# ==========================================
+# 6. Database Service
+# ==========================================
+apiVersion: v1
+kind: Service
+metadata:
+  name: db-service # Backend가 이 이름으로 접속함
+spec:
+  type: ClusterIP # 내부에서만 접속 가능
+  selector:
+    app: postgres-db # 위의 db-statefulset과 연결
+  ports:
+    - port: 5432       # 서비스 포트
+      targetPort: 5432 # 파드 포트
