@@ -1,4 +1,7 @@
 # Xthon Infrastructure & Configuration
+[![Terraform](https://img.shields.io/badge/terraform-844FBA.svg?style=for-the-badge&logo=terraform&logoColor=white)](https://developer.hashicorp.com/terraform)
+[![Ansible](https://img.shields.io/badge/ansible-EE0000.svg?style=for-the-badge&logo=ansible&logoColor=white)](https://www.redhat.com/ko/topics/automation/learning-ansible-tutorial)
+[![AWS](https://img.shields.io/badge/AWS-%23FF9900.svg?style=for-the-badge&logo=amazon-aws&logoColor=white)](https://aws.amazon.com/)
 
 이 프로젝트는 AWS 클라우드 인프라를 관리하기 위한 **Terraform** 코드와, 해당 인프라 위에서 Kubernetes 환경을 구성하기 위한 **Ansible** 코드로 구성되어 있습니다.
 
